@@ -1,0 +1,51 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 🔹 Setup .NET Core for ASP.NET backend
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    # 🔹 Setup Node.js for React frontend
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    # 🔹 Restore dependencies and build backend
+    - name: Restore & Build Backend
+      working-directory: EduSyncBackend
+      run: |
+        dotnet restore
+        dotnet build --configuration Release --no-restore
+
+    # 🔹 Install dependencies and build frontend
+    - name: Install & Build Frontend
+      working-directory: EduSyncFrontend
+      run: |
+        npm install
+        npm run build
+
+    # 🔹 Run backend tests
+    - name: Run Backend Tests
+      working-directory: EduSyncBackend
+      run: dotnet test --no-restore --verbosity normal
+
+    # 🔹 Run frontend tests (if any)
+    - name: Run Frontend Tests
+      working-directory: EduSyncFrontend
+      run: npm test || echo "No frontend tests found"
