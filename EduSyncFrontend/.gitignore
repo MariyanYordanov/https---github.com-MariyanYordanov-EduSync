@@ -22,3 +22,32 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# ASP.NET Core
+bin/
+obj/
+*.db
+*.db-shm
+*.db-wal
+appsettings*.json
+
+# React (Node.js)
+node_modules/
+dist/
+.vscode/
+.DS_Store
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnp/
+.pnp.js
+*.pnp.js
+.pnp.cjs
+*.pnp.cjs
+*.env
